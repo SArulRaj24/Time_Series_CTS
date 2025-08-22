@@ -5,9 +5,15 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-
-df = pd.read_excel("../cleaned/cleaned_dates_monthly.xlsx")   # keep your file in /data/
-df['datum'] = pd.to_datetime(df['datum'], errors='coerce')
+sheets = {
+    "hour": pd.read_excel("data/hourly.xlsx"),
+    "daily": pd.read_excel("data/daily.xlsx"),
+    "week": pd.read_excel("data/week.xlsx"),
+    "month": pd.read_excel("data/month.xlsx")
+}  # keep your file in /data/
+# Convert 'datum' column to datetime for all sheets
+for key in sheets:
+    sheets[key]['datum'] = pd.to_datetime(sheets[key]['datum'], errors='coerce')
 
 @app.route('/')
 def index():
@@ -19,7 +25,8 @@ def index():
 @app.route('/get_drugs')
 def get_drugs():
     # skip first column 'datum'
-    drugs = df.columns[1:].tolist()
+    #drugs = df.columns[1:].tolist()
+    drugs = sheets['month'].columns[1:].tolist()
     return jsonify(drugs)
 
 # Endpoint to get time series for selected drug
@@ -34,28 +41,29 @@ def get_data(drug):
     return jsonify(data)
 
 # Endpoint to upload new Excel/CSV data
-@app.route('/upload', methods=["POST"])
-def upload():
-    file = request.files['file']
-    if file.filename.endswith(".csv"):
-        new_df = pd.read_csv(file)
-    else:
-        new_df = pd.read_excel(file)
+# @app.route('/upload', methods=["POST"])
+# def upload():
+#     file = request.files['file']
+#     if file.filename.endswith(".csv"):
+#         new_df = pd.read_csv(file)
+#     else:
+#         new_df = pd.read_excel(file)
     
-    global df
-    df = pd.concat([df, new_df], ignore_index=True)
-    return jsonify({"message": "File uploaded and data appended successfully."})
+#     global df
+#     df = pd.concat([df, new_df], ignore_index=True)
+#     return jsonify({"message": "File uploaded and data appended successfully."})
 
 @app.route('/analysis')
 def analysis():
     # Get query params (optional: from submit button)
     drug = request.args.get("drug")
-    time_range = request.args.get("time_range")
+    time_range = request.args.get("time_range") # hour month week month
 
     # If no drug selected yet → just load page
-    if not drug:
-        return re0nder_template("Analysis.html", drug=None)
+    if not drug or not time_range:
+        return render_template("Analysis.html", drug=None)
 
+    df=sheets[time_range]  # Get the DataFrame for the selected time range
     # Otherwise send the drug + data to template
     if drug not in df.columns:
         data = {

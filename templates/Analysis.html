@@ -42,7 +42,26 @@
             borderColor: 'blue',
             fill: false
           }]
-        }
+        },
+        options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Date'
+                            }
+                        },
+                        y: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Sales'
+                            }
+                        }
+                    }
+                }
       });
     </script>
     <script src="../static/js/script.js"></script>
