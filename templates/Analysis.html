@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h3 class="header-title">Quintrox Forecasting</h3>
+        </div>
+
+        <div class="content">
+            <button class="forecast-button" id="time">Time preference</button>
+            <button class="forecast-button" id="analysis">Analysis</button>
+            <button class="forecast-button" id="forecasting">Forcasting</button>
+            <button class="forecast-button" id="strategy">Stratergy</button>
+        </div>
+
+
+    </div>
+    
+    <h1>Analysis Page</h1>
+    <p>This is the analysis page content.</p>
+    <h3>Selected Drug: {{ drug }}</h3>
+    <p>Time Range: {{ timerange }}</p>
+
+    <canvas id="drugChart"></canvas>
+    <script>
+      const ctx = document.getElementById('drugChart').getContext('2d');
+      const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: {{ data.dates|safe }},
+          datasets: [{
+            label: '{{ drug }} Sales',
+            data: {{ data['values']|safe }},
+            borderColor: 'blue',
+            fill: false
+          }]
+        }
+      });
+    </script>
+    <script src="../static/js/script.js"></script>
+    
+</body>
+</html>

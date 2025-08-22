@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drug Forecasting</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h3 class="header-title">Quintrox Forcasting</h3>
+        </div>
+
+        <div class="content">
+            <button class="forecast-button" id="time">Time preference</button>
+            <button class="forecast-button" id="analysis">Analysis</button>
+            <button class="forecast-button" id="forecasting">Forcasting</button>
+            <button class="forecast-button" id="strategy">Stratergy</button>
+        </div>
+
+        <div class="dropdown_div" id="drop">
+            <select class="dropdown" id="drug">
+            <option value="disabled selected">Select an option...</option>
+            <option value="M01AB" id="">M01AB</option>
+            <option value="M01AE" id="">M01AE</option>
+            <option value="N02BA" id="">N02BA</option>
+            <option value="N02BE" id="">N02BE</option>
+            <option value="N05B" id="">N05B</option>
+            <option value="N05C" id="">N05C</option>
+            <option value="R03" id="">R03</option>
+            <option value="R06" id="">R06</option>
+        </select>
+        </div>
+
+        <div class="timerange_div">
+            <select class="timerange" id="time_range">
+                <option value="disabled selected">Select a time range</option>
+                <option value="hour" id="">Hourly</option>
+                <option value="daily" id="">Daily</option>
+                <option value="week" id="">Weekly</option>
+                <option value="month" id="">Monthly</option>
+            </select>
+        </div>
+
+        <span class="button">
+            <button class="btn" id="btn"> Submit</button>
+        </span>
+       
+
+    </div>
+    
+
+    <script src="../static/js/script.js"></script>
+</body>
+</html>
